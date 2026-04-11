@@ -1,6 +1,6 @@
 # Skills
 
-This repository includes reusable Codex skills for Bilibili subtitle extraction and note generation.
+This repository includes reusable Codex skills for Bilibili subtitle extraction, keyframe extraction, and note generation.
 
 ## Included skills
 
@@ -9,6 +9,12 @@ This repository includes reusable Codex skills for Bilibili subtitle extraction 
 - Purpose: fetch native Bilibili subtitles, write sectioned Markdown transcripts, and validate timestamped screenshot extraction.
 - Best for: turning a Bilibili URL into `sectioned.md`, `subtitles.json`, and smoke-tested keyframe timestamps.
 - Directory: [bilibili-subtitles-and-keyframes](./bilibili-subtitles-and-keyframes)
+
+### `bilibili-keyframe-extractor-commented`
+
+- Purpose: explain or adapt Bilibili timestamp-based screenshot extraction with a more readable, commented workflow.
+- Best for: understanding how `/api/bilibili/screenshot`-style extraction works, including DASH parsing, ffmpeg flags, and smoke testing.
+- Directory: [bilibili-keyframe-extractor-commented](./bilibili-keyframe-extractor-commented)
 
 ### `subtitle-keyframe-note-writer`
 
@@ -23,6 +29,11 @@ skills/
 +- bilibili-subtitles-and-keyframes/
 |  +- SKILL.md
 |  +- README.md
+|  +- agents/
+|  +- references/
+|  +- scripts/
++- bilibili-keyframe-extractor-commented/
+|  +- SKILL.md
 |  +- agents/
 |  +- references/
 |  +- scripts/
