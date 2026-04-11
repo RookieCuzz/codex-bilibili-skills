@@ -1,48 +1,47 @@
-# Codex Bilibili Skills
+# Skills
 
-Reusable Codex skills for Bilibili subtitle extraction and Markdown note generation.
+This repository includes reusable Codex skills for Bilibili subtitle extraction and note generation.
 
 ## Included skills
 
 ### `bilibili-subtitles-and-keyframes`
-- Fetches native Bilibili subtitles.
-- Writes sectioned Markdown transcripts.
-- Validates timestamped screenshot extraction against a repo-local screenshot endpoint.
 
-Directory: [bilibili-subtitles-and-keyframes](./bilibili-subtitles-and-keyframes)
+- Purpose: fetch native Bilibili subtitles, write sectioned Markdown transcripts, and validate timestamped screenshot extraction.
+- Best for: turning a Bilibili URL into `sectioned.md`, `subtitles.json`, and smoke-tested keyframe timestamps.
+- Directory: [bilibili-subtitles-and-keyframes](./bilibili-subtitles-and-keyframes)
 
 ### `subtitle-keyframe-note-writer`
-- Turns `sectioned.md`, subtitle evidence, and optional keyframes into a checked Markdown note.
-- Keeps video content and external expansion clearly separated.
 
-Directory: [subtitle-keyframe-note-writer](./subtitle-keyframe-note-writer)
-
-## Suggested workflow
-
-1. Use `bilibili-subtitles-and-keyframes` to fetch `sectioned.md` and subtitle metadata from a Bilibili URL.
-2. Validate screenshot extraction if the final note should include chapter images.
-3. Use `subtitle-keyframe-note-writer` to generate the final study note.
+- Purpose: turn subtitles, timestamps, and optional screenshots into a checked Markdown study note.
+- Best for: producing a tutorial-style Markdown note from `sectioned.md`, raw subtitles, and keyframes.
+- Directory: [subtitle-keyframe-note-writer](./subtitle-keyframe-note-writer)
 
 ## Repository layout
 
 ```text
-codex-bilibili-skills/
-+- README.md
+skills/
 +- bilibili-subtitles-and-keyframes/
-|  +- README.md
 |  +- SKILL.md
+|  +- README.md
 |  +- agents/
 |  +- references/
 |  +- scripts/
 +- subtitle-keyframe-note-writer/
-   +- README.md
-   +- SKILL.md
-   +- agents/
-   +- references/
+|  +- SKILL.md
+|  +- README.md
+|  +- agents/
+|  +- references/
++- README.md
 ```
+
+## Typical workflow
+
+1. Use `bilibili-subtitles-and-keyframes` to fetch subtitles and validate screenshot capability.
+2. Review or fix subtitle quality when the source track is AI-generated.
+3. Use `subtitle-keyframe-note-writer` to generate a structured note from the evidence.
 
 ## Notes
 
 - Some Bilibili subtitle tracks require login state.
-- Prefer a full browser `Cookie` header when subtitle access is gated.
-- AI subtitle tracks should be verified before being used as final evidence.
+- Prefer a full browser `Cookie` header over `SESSDATA` alone when subtitle access is gated.
+- Screenshot extraction and subtitle access should be treated as separate checks.
