@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Bilibili Subtitles + Keyframes'
+  short_description: 'Fetch Bilibili subtitles or validate timestamped keyframes.'
+  default_prompt: 'Use $bilibili-subtitles-and-keyframes to fetch Bilibili subtitles, write sectioned Markdown, or validate Bilibili keyframe extraction in this codebase.'

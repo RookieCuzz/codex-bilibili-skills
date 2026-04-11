@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Subtitle Keyframe Note Writer'
+  short_description: 'Write tutorial-style Markdown video notes'
+  default_prompt: 'Use $subtitle-keyframe-note-writer to turn subtitles and keyframes into a beginner-friendly Markdown tutorial note.'
