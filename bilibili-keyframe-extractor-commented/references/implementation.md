@@ -127,9 +127,9 @@ pipe:1
 
 This combination is a practical compromise between speed and correctness.
 
-### Why `mjpeg` to `pipe:1`
+### Why a single image stream to `pipe:1`
 
-Returning a JPEG buffer is convenient for web APIs because:
+Returning a single image buffer is convenient for CLIs and web APIs because:
 
 - the server can directly send bytes to the response
 - callers can store the result without another conversion step
@@ -152,6 +152,23 @@ Helpful metadata headers:
 - `X-Screenshot-Timestamp-Seconds`
 
 These headers make smoke-test scripts easier to write and debug.
+
+## 5.1 Standalone Module Shape
+
+When you do not already have a repo-local endpoint, keep the same logic in a
+small reusable module or CLI that:
+
+- accepts `videoUrl`
+- accepts `timestamp`
+- optionally accepts `cookie` or `cookie-file`
+- writes a PNG to disk
+- prints metadata such as:
+  - output path
+  - resolved timestamp seconds
+  - page number
+  - video id
+
+That shape keeps the skill useful even before any server-side route exists.
 
 ## 6. Login-State Edge Cases
 

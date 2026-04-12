@@ -1,6 +1,6 @@
 ---
 name: bilibili-keyframe-extractor-commented
-description: Copy of the Bilibili keyframe extractor skill with expanded explanations and inline guidance. Use when Codex needs a highly readable version of the skill to understand or teach how timestamp-based Bilibili screenshot extraction works, including DASH parsing, ffmpeg usage, smoke testing, and login-state edge cases.
+description: Copy of the Bilibili keyframe extractor skill with expanded explanations and inline guidance. Use when Codex needs a highly readable version of the skill to understand, teach, or directly run timestamp-based Bilibili screenshot extraction, including DASH parsing, ffmpeg usage, standalone capture, smoke testing, and login-state edge cases.
 ---
 
 # Bilibili Keyframe Extractor Commented
@@ -13,6 +13,7 @@ Keep this version when readability matters more than compactness:
 
 - read the end-to-end extraction flow
 - understand why each implementation choice exists
+- capture a PNG directly from `videoUrl` plus `timestamp`
 - reuse the smoke-test script in another repo
 - teach another developer how the feature is wired
 
@@ -20,11 +21,12 @@ The target problem is always the same: extract a real video frame from a Bilibil
 
 ## Workflow
 
-1. Inspect the target repo before writing code.
-   Look for an existing `ffmpeg` path, a Bilibili HTML parser, or an endpoint such as `/api/bilibili/screenshot`.
+1. Decide whether you need standalone capture or repo integration.
+   If you only need a PNG file, use the bundled `scripts/capture_bilibili_screenshot.js`.
+   If you need to validate or wire an existing repo endpoint, inspect the target repo first.
 
 2. Reuse an existing screenshot endpoint if it already accepts `videoUrl` and `timestamp`.
-   If the endpoint is missing, implement the server-side API first.
+   If the endpoint is missing, use the bundled standalone script directly or port its implementation into the repo.
 
 3. Fetch the Bilibili video page HTML.
    Send a browser-like `User-Agent` and a Bilibili `Referer`.
@@ -44,10 +46,11 @@ The target problem is always the same: extract a real video frame from a Bilibil
    Use a fast seek before `-i`, an accurate seek after `-i`, and emit a single JPEG frame.
 
 8. Return bytes plus metadata.
-   Include headers such as resolved timestamp, page number, and video id.
+   Include fields such as resolved timestamp, page number, and video id.
 
-9. Smoke-test the full path locally.
-   The included script starts the repo’s dev server, calls the screenshot endpoint, writes output files, and records a structured report.
+9. Choose the right validation path.
+   Use `scripts/capture_bilibili_screenshot.js` for direct extraction.
+   Use `scripts/smoke_bilibili_endpoint.js` only when the task is specifically about a repo-local screenshot endpoint.
 
 ## Rules
 
@@ -63,13 +66,18 @@ The target problem is always the same: extract a real video frame from a Bilibil
 
 - `agents/openai.yaml`
   Commented UI metadata for the skill.
+- `README.md`
+  Standalone usage examples for direct PNG extraction and endpoint validation.
 - `references/implementation.md`
   Expanded implementation notes and failure analysis.
+- `scripts/capture_bilibili_screenshot.js`
+  Reusable standalone module plus CLI for direct PNG output.
 - `scripts/smoke_bilibili_endpoint.js`
   Fully commented Node.js smoke-test runner.
 
 ## How To Use This Copy
 
 1. Read `references/implementation.md` for the implementation decisions.
-2. Reuse `scripts/smoke_bilibili_endpoint.js` when validating another repo.
-3. If you need the original compact skill for normal Codex use, keep using the original under `~/.codex/skills/`.
+2. Run `scripts/capture_bilibili_screenshot.js` when you need a PNG directly from `videoUrl` plus `timestamp`.
+3. Reuse `scripts/smoke_bilibili_endpoint.js` when validating another repo's existing endpoint.
+4. If you need the original compact skill for normal Codex use, keep using the original under `~/.codex/skills/`.
