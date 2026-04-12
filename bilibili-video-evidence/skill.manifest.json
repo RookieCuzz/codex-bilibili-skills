@@ -1,0 +1,8 @@
+{
+  "name": "bilibili-video-evidence",
+  "capabilities": ["fetch_subtitles", "extract_frames", "validate_endpoint"],
+  "inputs": ["video_url", "timestamps?"],
+  "outputs": ["sectioned_md", "subtitles_json", "frame_pngs", "smoke_report?"],
+  "consumes": [],
+  "produces": ["subtitle_artifacts", "frame_artifacts"]
+}

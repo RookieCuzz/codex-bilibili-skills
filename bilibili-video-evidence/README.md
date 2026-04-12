@@ -1,6 +1,6 @@
-# bilibili-subtitles-and-keyframes
+# bilibili-video-evidence
 
-Fetch native Bilibili subtitle tracks, write sectioned Markdown transcripts, and validate timestamped screenshot extraction.
+Turn a Bilibili `videoUrl` into evidence artifacts that downstream note-writing can consume.
 
 ## What it does
 
@@ -8,21 +8,25 @@ Fetch native Bilibili subtitle tracks, write sectioned Markdown transcripts, and
 - Fetches subtitle metadata from Bilibili player APIs.
 - Chooses a usable subtitle track and writes:
   - `sectioned.md`
-  - optional normalized `subtitles.json`
-- Reuses or validates the repo's `/api/bilibili/screenshot` flow for keyframes.
+  - `subtitles.json`
+- Captures direct PNG evidence under `frames/`.
+- Reuses or validates the repo's `/api/bilibili/screenshot` flow when the task is an endpoint smoke test.
 
 ## Directory layout
 
 ```text
-bilibili-subtitles-and-keyframes/
+bilibili-video-evidence/
 +- SKILL.md
 +- README.md
++- skill.manifest.json
 +- agents/
 |  +- openai.yaml
 +- references/
 |  +- implementation.md
+|  +- keyframe-reference.md
 +- scripts/
    +- bilibili_subtitle_to_md.py
+   +- capture_bilibili_screenshot.js
    +- smoke_bilibili_endpoint.js
 ```
 
@@ -35,18 +39,29 @@ bilibili-subtitles-and-keyframes/
 
 ## Main outputs
 
-- Markdown transcript grouped into fixed-length time buckets
-- Optional JSON output with subtitle metadata and merged segments
-- Smoke-test report for screenshot validation
+- `sectioned.md`
+- `subtitles.json`
+- `frames/*.png`
+- Optional `smoke-report.json`
 
 ## Example: subtitle extraction
 
 ```bash
 python scripts/bilibili_subtitle_to_md.py ^
   --url "https://www.bilibili.com/video/BV1X7411F744?p=5" ^
-  --cookie-file "cookie.txt" ^
   --output "sectioned.md" ^
   --json-output "subtitles.json"
+```
+
+If `--cookie` and `--cookie-file` are omitted, the script can also use `BILIBILI_COOKIE` or `BILIBILI_SESSION_TOKEN` from the environment.
+
+## Example: direct frame capture
+
+```bash
+node scripts/capture_bilibili_screenshot.js ^
+  "https://www.bilibili.com/video/BV15DG7zxENa/" ^
+  00:24 ^
+  --output=frames/intro.png
 ```
 
 ## Example: screenshot smoke test
@@ -55,10 +70,12 @@ python scripts/bilibili_subtitle_to_md.py ^
 node scripts/smoke_bilibili_endpoint.js <repo-root> <bilibili-url> --timestamps=00:13,10:25
 ```
 
+The smoke script requires each screenshot response to be a non-empty `image/jpeg` and records subtitle and screenshot status separately in the report.
+
 ## When to use it
 
-- You need subtitles from a Bilibili page.
-- You want a `sectioned.md` transcript before writing notes.
+- You need subtitles and frames from a Bilibili page.
+- You want a reusable evidence bundle before writing notes.
 - You need to confirm screenshot extraction works for specific timestamps.
 
 ## Operational notes
@@ -66,3 +83,4 @@ node scripts/smoke_bilibili_endpoint.js <repo-root> <bilibili-url> --timestamps=
 - Prefer full `BILIBILI_COOKIE` when available.
 - If subtitle access is login-gated, ask for a fresh full browser `Cookie` header.
 - AI subtitle tracks can be mismatched; verify duration and early subtitle lines before trusting them.
+- Use `references/keyframe-reference.md` when you need the explanatory version of the extraction workflow instead of the compact rules.

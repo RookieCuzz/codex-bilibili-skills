@@ -1,6 +1,6 @@
-# subtitle-keyframe-note-writer
+# video-note-writer
 
-Generate a checked Markdown study note from a video title, `sectioned.md`, raw subtitles, and optional keyframes.
+Write a checked Markdown study note from evidence artifacts that already exist.
 
 ## What it does
 
@@ -15,9 +15,10 @@ Generate a checked Markdown study note from a video title, `sectioned.md`, raw s
 ## Directory layout
 
 ```text
-subtitle-keyframe-note-writer/
+video-note-writer/
 +- SKILL.md
 +- README.md
++- skill.manifest.json
 +- agents/
 |  +- openai.yaml
 +- references/
@@ -31,7 +32,7 @@ subtitle-keyframe-note-writer/
 
 - Video title and URL
 - `sectioned.md`
-- Raw subtitle file or normalized subtitle JSON
+- Normalized `subtitles.json` or another raw subtitle file
 - Optional keyframe image paths and timestamps
 - Optional external references for fact checking or clarification
 
@@ -56,6 +57,6 @@ subtitle-keyframe-note-writer/
 ## Typical workflow
 
 1. Start from `sectioned.md` plus subtitle JSON.
-2. Plan one representative timestamp per chapter when screenshots are needed.
-3. Insert screenshots only when they improve comprehension.
+2. Insert screenshots only when they improve comprehension.
+3. Keep missing evidence explicit instead of guessing.
 4. Run a final consistency and Markdown-safety check before saving the note.

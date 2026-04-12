@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -82,6 +83,17 @@ def read_cookie(cookie: str, cookie_file: str) -> str:
         return normalize_cookie(cookie)
     if cookie_file:
         return normalize_cookie(Path(cookie_file).read_text(encoding="utf-8"))
+    env_cookie = normalize_cookie(os.environ.get("BILIBILI_COOKIE", ""))
+    if env_cookie:
+        return env_cookie
+    env_session_token = os.environ.get("BILIBILI_SESSION_TOKEN", "").strip()
+    if env_session_token:
+        session_token = next(
+            (item.strip() for item in env_session_token.split(",") if item.strip()),
+            "",
+        )
+        if session_token:
+            return f"SESSDATA={session_token}"
     return ""
 
 

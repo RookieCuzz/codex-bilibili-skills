@@ -322,7 +322,7 @@ function sanitizeFilePart(value) {
 
 function buildDefaultOutputPath(videoId, pageNumber, seconds) {
   const safeSeconds = String(Math.floor(seconds)).padStart(4, '0')
-  return path.resolve(`${sanitizeFilePart(videoId)}-p${pageNumber}-${safeSeconds}s.png`)
+  return path.resolve('frames', `${sanitizeFilePart(videoId)}-p${pageNumber}-${safeSeconds}s.png`)
 }
 
 function sha256(buffer) {
@@ -436,7 +436,7 @@ async function main() {
     return
   }
 
-  console.log(`Saved JPEG to: ${payload.outputPath}`)
+  console.log(`Saved PNG to: ${payload.outputPath}`)
   console.log(`Video: ${payload.videoId} (P${payload.pageNumber})`)
   console.log(`Timestamp: ${payload.timestamp}s`)
   console.log(`Bytes: ${payload.bytes}`)

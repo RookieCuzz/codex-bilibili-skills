@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Video Note Writer'
+  short_description: 'Write Markdown study notes from subtitle and frame evidence.'
+  default_prompt: 'Use $video-note-writer to turn sectioned subtitles, subtitle JSON, and optional frame captures into a checked Markdown study note.'

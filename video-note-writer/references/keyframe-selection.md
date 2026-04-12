@@ -1,17 +1,17 @@
 # Keyframe Selection and Placement
 
-Use this file when the note should actively drive screenshot extraction instead of only consuming pre-made images.
+Use this file when the note should choose among provided screenshots or record missing-image requests for the evidence layer.
 
-## 1. When To Extract Keyframes
+## 1. When To Use Existing Keyframes
 
-Extract new keyframes when:
+Prefer existing screenshots when:
 
-- no chapter images were provided
-- provided images do not cover all major chapters
-- the chapter contains a formula, table, slide, map, or visual explanation that deserves a dedicated image
-- the user explicitly wants the note to insert screenshots in the tutorial
+- chapter images were already provided
+- the evidence bundle already covers the major sections
+- the chapter includes a formula, table, slide, map, or visual explanation that already has a matching frame
+- the user asked for a note, not another evidence pass
 
-Do not extract images just for decoration.
+Do not add images just for decoration.
 
 ## 2. Main Chapter Image Rule
 
@@ -49,7 +49,7 @@ Default placement:
 
 ## 4. Timestamp Planning Heuristics
 
-When planning timestamps from subtitles and chapter ranges:
+If screenshots are missing and you need to describe what evidence should be collected next, plan timestamps from subtitles and chapter ranges:
 
 1. Avoid the first 1-2 seconds of a chapter unless the opening frame is the main visual.
 2. Avoid the last 1-2 seconds if it looks like a scene transition.
@@ -57,19 +57,14 @@ When planning timestamps from subtitles and chapter ranges:
 4. If the subtitles mention "this chart", "this number", "this table", "this formula", "this map", or similar, prioritize that nearby timestamp.
 5. If the chapter is mostly narration with no strong visual, choose the most stable representative frame rather than forcing a visual claim.
 
-## 5. If Screenshot Capability Exists
+## 5. If Screenshots Are Missing
 
-If the repo already has a Bilibili screenshot endpoint or sibling skill:
+If the evidence bundle does not include a needed screenshot:
 
-- first plan timestamps
-- then extract screenshots
-- then insert the returned image paths into the note
-
-If extraction fails:
-
-- do not block the whole note
-- either omit the image or leave a visible placeholder such as:
-  - `<!-- pending screenshot: 03:12 -->`
+- do not extract it inside this skill
+- either omit the image, or
+- leave a visible placeholder such as `<!-- pending screenshot request: 03:12 -->`, or
+- record the desired timestamp so the evidence layer can collect it later
 
 ## 6. Caption Style
 
@@ -77,8 +72,8 @@ Captions should explain relevance, not restate the filename.
 
 Good:
 
-- "Chapter main frame: the abandoned clinic building mentioned in this section"
-- "Figure frame: source capsule structure shown while the narration explains its layers"
+- "Chapter main frame: the clinic building discussed in this section"
+- "Figure frame: the table shown while the speaker compares the three cases"
 
 Weak:
 

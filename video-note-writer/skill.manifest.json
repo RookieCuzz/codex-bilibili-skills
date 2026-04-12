@@ -1,0 +1,8 @@
+{
+  "name": "video-note-writer",
+  "capabilities": ["write_study_note"],
+  "inputs": ["sectioned_md", "subtitles_json", "frame_pngs?"],
+  "outputs": ["note_md"],
+  "consumes": ["subtitle_artifacts", "frame_artifacts"],
+  "produces": ["note_artifact"]
+}

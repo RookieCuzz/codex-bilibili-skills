@@ -1,45 +1,36 @@
 # Skills
 
-This repository includes reusable Codex skills for Bilibili subtitle extraction, keyframe extraction, and note generation.
+This repository includes reusable Codex skills for Bilibili evidence collection and downstream note generation.
 
 ## Included skills
 
-### `bilibili-subtitles-and-keyframes`
+### `bilibili-video-evidence`
 
-- Purpose: fetch native Bilibili subtitles, write sectioned Markdown transcripts, and validate timestamped screenshot extraction.
-- Best for: turning a Bilibili URL into `sectioned.md`, `subtitles.json`, and smoke-tested keyframe timestamps.
-- Directory: [bilibili-subtitles-and-keyframes](./bilibili-subtitles-and-keyframes)
+- Purpose: turn a Bilibili `videoUrl` into `sectioned.md`, `subtitles.json`, `frames/*.png`, and optional `smoke-report.json`.
+- Best for: subtitle download, direct frame capture, and screenshot endpoint smoke validation.
+- Directory: [bilibili-video-evidence](./bilibili-video-evidence)
 
-### `bilibili-keyframe-extractor-commented`
+### `video-note-writer`
 
-- Purpose: explain or adapt Bilibili timestamp-based screenshot extraction with a more readable, commented workflow.
-- Best for: understanding how `/api/bilibili/screenshot`-style extraction works, including DASH parsing, ffmpeg flags, and smoke testing.
-- Directory: [bilibili-keyframe-extractor-commented](./bilibili-keyframe-extractor-commented)
-
-### `subtitle-keyframe-note-writer`
-
-- Purpose: turn subtitles, timestamps, and optional screenshots into a checked Markdown study note.
-- Best for: producing a tutorial-style Markdown note from `sectioned.md`, raw subtitles, and keyframes.
-- Directory: [subtitle-keyframe-note-writer](./subtitle-keyframe-note-writer)
+- Purpose: consume subtitle and frame artifacts and turn them into a checked Markdown study note.
+- Best for: producing a tutorial-style Markdown note from `sectioned.md`, `subtitles.json`, and optional screenshots.
+- Directory: [video-note-writer](./video-note-writer)
 
 ## Repository layout
 
 ```text
 skills/
-+- bilibili-subtitles-and-keyframes/
++- bilibili-video-evidence/
 |  +- SKILL.md
 |  +- README.md
+|  +- skill.manifest.json
 |  +- agents/
 |  +- references/
 |  +- scripts/
-+- bilibili-keyframe-extractor-commented/
-|  +- SKILL.md
-|  +- agents/
-|  +- references/
-|  +- scripts/
-+- subtitle-keyframe-note-writer/
++- video-note-writer/
 |  +- SKILL.md
 |  +- README.md
+|  +- skill.manifest.json
 |  +- agents/
 |  +- references/
 +- README.md
@@ -47,12 +38,21 @@ skills/
 
 ## Typical workflow
 
-1. Use `bilibili-subtitles-and-keyframes` to fetch subtitles and validate screenshot capability.
+1. Use `bilibili-video-evidence` to collect subtitle and frame artifacts.
 2. Review or fix subtitle quality when the source track is AI-generated.
-3. Use `subtitle-keyframe-note-writer` to generate a structured note from the evidence.
+3. Use `video-note-writer` to generate a structured note from the evidence.
+
+## Orchestration
+
+- Each skill now carries a `skill.manifest.json` that declares inputs, outputs, and produced artifact classes.
+- Route `videoUrl` plus a note request through `bilibili-video-evidence` first, then `video-note-writer`.
+- Route `videoUrl` plus timestamps directly to the frame-capture capability.
+- Route existing `sectioned.md` or `subtitles.json` directly to `video-note-writer`.
+- Route screenshot endpoint validation requests to the smoke-test capability instead of the standalone capture path.
 
 ## Notes
 
 - Some Bilibili subtitle tracks require login state.
 - Prefer a full browser `Cookie` header over `SESSDATA` alone when subtitle access is gated.
 - Screenshot extraction and subtitle access should be treated as separate checks.
+- The former `commented` skill now lives as `bilibili-video-evidence/references/keyframe-reference.md`.

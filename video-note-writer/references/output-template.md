@@ -3,14 +3,14 @@
 Use this structure when generating a tutorial-style note.
 
 ```md
-# {{视频标题}} 笔记
+# 《{{视频标题}}》笔记
 
 > 视频链接：{{视频链接}}
 > 视频 ID：{{视频ID}}
 > 分 P：{{分P信息}}
 > 输出文件名：`《{{视频标题}}》笔记.md`
-> 生成依据：章节字幕 + 原始字幕 + 关键帧 + 可选外部资料
-> 说明：正文中的“视频内容”和“知识拓展”已分层展示。
+> 生成依据：`sectioned.md` + `subtitles.json` + 可选关键帧 + 可选外部资料
+> 说明：正文中的“视频内容”和“知识拓展”需要分层展示。
 
 ## 一、先看结论
 
@@ -94,6 +94,6 @@ Notes:
 
 - If a chapter has no suitable image, omit the image line instead of inventing one.
 - If there are multiple strong images, keep only one main image per chapter unless the user asks for more.
-- If a chapter has a dedicated formula/table/diagram frame, place it near the relevant subsection instead of only at the top.
+- If a chapter has a dedicated formula, table, or diagram frame, place it near the relevant subsection instead of only at the top.
 - If a formula comes from external verification rather than directly from the video, label it clearly.
-- If the video is explanatory in nature, prefer tutorial flow over “流水账式摘要”.
+- If visual evidence is missing, keep the gap explicit instead of pretending the image exists.
