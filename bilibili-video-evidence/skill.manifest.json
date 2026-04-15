@@ -1,8 +1,8 @@
 {
   "name": "bilibili-video-evidence",
-  "capabilities": ["fetch_subtitles", "extract_frames", "validate_endpoint"],
+  "capabilities": ["fetch_subtitles", "fallback_local_asr", "extract_frames", "validate_endpoint"],
   "inputs": ["video_url", "timestamps?"],
-  "outputs": ["sectioned_md", "subtitles_json", "frame_pngs", "smoke_report?"],
+  "outputs": ["sectioned_md", "subtitles_json", "audio_wav?", "asr_srt?", "asr_json?", "asr_zh_srt?", "frame_pngs", "smoke_report?"],
   "consumes": [],
-  "produces": ["subtitle_artifacts", "frame_artifacts"]
+  "produces": ["subtitle_artifacts", "frame_artifacts", "asr_artifacts"]
 }

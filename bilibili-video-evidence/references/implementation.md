@@ -10,6 +10,14 @@ Use this file for the compact rules. Read `keyframe-reference.md` when you need 
 - Reject tracks with a missing `subtitle_url` or an empty body.
 - Normalize the result into `sectioned.md` and `subtitles.json`.
 
+## Local ASR fallback
+
+- Switch to local ASR only after native subtitle checks fail, or when the user explicitly asks for local/offline transcription.
+- Use `scripts/bilibili_audio_asr_to_srt.py` for the fallback chain.
+- Extract audio with `ffmpeg`, run local ASR, and write `audio-16k.wav`, `asr.srt`, and `asr.json`.
+- If Chinese translation is requested, write `asr.zh.srt` with the same numbering and timestamps as `asr.srt`.
+- Preserve technical keywords in English during translation.
+
 ## Direct frame capture
 
 - Fetch the public page, not `x/player/playurl`.

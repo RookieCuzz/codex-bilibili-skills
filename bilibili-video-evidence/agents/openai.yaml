@@ -1,4 +1,4 @@
 interface:
   display_name: 'Bilibili Video Evidence'
-  short_description: 'Collect subtitles, frames, and optional smoke reports.'
-  default_prompt: 'Use $bilibili-video-evidence to turn a Bilibili video URL into sectioned subtitles, frame captures, or screenshot smoke-test evidence in this codebase.'
+  short_description: 'Collect native subtitles, ASR fallback artifacts, frames, and smoke reports.'
+  default_prompt: 'Use $bilibili-video-evidence to turn a Bilibili video URL into native subtitle artifacts, local ASR `.srt` fallback artifacts when subtitles are unavailable, frame captures, or screenshot smoke-test evidence in this codebase.'
